@@ -17,7 +17,7 @@ For this milestone, the team will inspect the dataset, analyze failure patterns,
 
 ## 2. Team Members and Responsibilities
 
-### Member 1 — Adithyan B (Team Lead and Integration)
+### Member 1 — Adithyan B (Integration)
 
 **Responsibilities**
 - Maintain the shared GitHub repository and project structure.
@@ -33,7 +33,7 @@ For this milestone, the team will inspect the dataset, analyze failure patterns,
 - Integrated project folder and repository
 - Final review checklist
 
-### Member 2 — Dheepesh N (Dataset and Preprocessing)
+### Member 2 — Hriday (Dataset and Preprocessing)
 
 **Responsibilities**
 - Prepare slides 4–6: Objectives, Dataset Description, and Dataset Features.
@@ -49,7 +49,7 @@ For this milestone, the team will inspect the dataset, analyze failure patterns,
 - `src/data_preprocessing.py`
 - Actual output screenshots or saved output
 
-### Member 3 — Hriday (Failure Analysis and Visualization)
+### Member 3 — Dheepesh N (Failure Analysis and Visualization)
 
 **Responsibilities**
 - Prepare slides 7–9: Python Implementation, Data-Quality/Preprocessing Output, and Failure Counts/Visualization.
