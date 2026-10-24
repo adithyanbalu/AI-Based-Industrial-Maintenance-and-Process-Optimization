@@ -32,7 +32,7 @@ Built around the **AI4I 2020 Predictive Maintenance Dataset**, featuring machine
 
 ## 👥 Team
 
-- **Adithyan B** — Team Lead
+- **Adithyan B** 
 - **Dheepesh N**
 - **Hriday Kaustubh Machiraju**
 - **Ganga Vanaparthi**
