@@ -5,7 +5,7 @@
 **Internship:** Infosys Springboard Virtual Internship 7.0
 
 **Team Members:**
-1. Adithyan B – Team Lead
+1. Adithyan B 
 2. Hriday Kaustubh Machiraju
 3. Dheepesh N
 4. Ganga Vanaparthi
@@ -107,7 +107,7 @@ All four members will work collaboratively and develop their assigned modules in
 
 # 4. TEAM TASK DIVISION
 
-## MEMBER 1 – ADITHYAN B (TEAM LEAD)
+## MEMBER 1 – ADITHYAN B 
 
 ### Main Responsibility: Machine Learning Improvement and Streamlit Dashboard
 
