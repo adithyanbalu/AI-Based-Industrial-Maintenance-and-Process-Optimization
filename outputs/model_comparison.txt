@@ -1,0 +1,42 @@
+================================================================================
+INFOSYS SPRINGBOARD 7.0 - MACHINE LEARNING ALGORITHM COMPARISON
+Author: Adithyan B (Team Lead)
+================================================================================
+Total Samples: 10000 | Train: 8000 | Test: 2000
+Failure Rate: 3.39% train, 3.40% test (Highly Imbalanced)
+Features used: Type, Air temperature [K], Process temperature [K], Rotational speed [rpm], Torque [Nm], Tool wear [min]
+Leakage Prevention: Failure modes (TWF, HDF, PWF, OSF, RNF) strictly excluded
+
+SUMMARY TABLE:
+                         Model  Accuracy  Precision (Failure)  Recall (Failure)  F1-Score (Failure)  ROC-AUC  True Negatives (TN)  False Positives (FP)  False Negatives (FN)  True Positives (TP)  Fit Time (s)
+Logistic Regression (Baseline)    0.9675             0.636364          0.102941            0.177215 0.899388                 1928                     4                    61                    7         0.028
+Logistic Regression (Balanced)    0.8245             0.141772          0.823529            0.241901 0.906954                 1593                   339                    12                   56         0.027
+      Decision Tree (Baseline)    0.9785             0.686567          0.676471            0.681481 0.832801                 1911                    21                    22                   46         0.037
+      Decision Tree (Balanced)    0.9365             0.331429          0.852941            0.477366 0.876138                 1815                   117                    10                   58         0.027
+      Random Forest (Baseline)    0.9795             0.721311          0.647059            0.682171 0.961199                 1915                    17                    24                   44         0.513
+        Improved Random Forest    0.9855             0.760000          0.838235            0.797203 0.982257                 1914                    18                    11                   57         0.582
+
+KEY FINDINGS & MODEL SELECTION RATIONALE:
+--------------------------------------------------------------------------------
+1. Accuracy Paradox:
+   - Baseline Logistic Regression achieves 96.75% accuracy, but failure recall
+     is only 10.29%, missing 61 out of 68 actual machine failures (FN = 61)!
+   - Accuracy is completely misleading on this imbalanced dataset (3.39% failures).
+
+2. Class Imbalance Handling:
+   - Standard decision tree and logistic regression suffer severe false negatives.
+   - Balanced class weighting forces the models to penalize missed failures heavily.
+
+3. Impact of Physics-Informed Domain Features:
+   - The Improved Random Forest incorporates Temperature Differential (Temp_diff),
+     Mechanical Power (Power_W), and Overstrain Index (Strain).
+   - Failure Recall increases from 64.71% (Baseline RF) to 83.82% (Improved RF).
+   - False Negatives dropped from 24 down to only 11 missed failures.
+   - Failure Precision improved from 72.13% to 76.00%.
+   - Failure F1-Score increased from 0.6822 to 0.7972.
+   - ROC-AUC reached 0.9823.
+
+SELECTED MODEL: Improved Random Forest Classifier
+Reason: Delivers the optimal trade-off between maximizing failure detection (Recall: 83.82%)
+        while avoiding excessive false alarms (Precision: 76.00%, False Positives: 18).
+================================================================================

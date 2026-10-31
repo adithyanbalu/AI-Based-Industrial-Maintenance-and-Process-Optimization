@@ -1,0 +1,91 @@
+{
+  "model_name": "Improved Random Forest Classifier",
+  "features": [
+    "Type",
+    "Air temperature [K]",
+    "Process temperature [K]",
+    "Rotational speed [rpm]",
+    "Torque [Nm]",
+    "Tool wear [min]"
+  ],
+  "derived_features": [
+    "Temp_diff",
+    "Power_W",
+    "Strain"
+  ],
+  "hyperparameters": {
+    "n_estimators": 250,
+    "max_depth": 12,
+    "min_samples_split": 4,
+    "class_weight": "balanced",
+    "random_state": 42
+  },
+  "metrics": {
+    "accuracy": 0.9855,
+    "precision_failure": 0.76,
+    "recall_failure": 0.8382352941176471,
+    "f1_failure": 0.7972027972027972,
+    "roc_auc": 0.9822570332480818,
+    "confusion_matrix": {
+      "TN": 1914,
+      "FP": 18,
+      "FN": 11,
+      "TP": 57
+    }
+  },
+  "baseline_comparison": {
+    "baseline_accuracy": 0.9795,
+    "baseline_precision": 0.7213,
+    "baseline_recall": 0.6471,
+    "baseline_f1": 0.6822,
+    "baseline_roc_auc": 0.9612,
+    "baseline_fn": 24,
+    "improved_fn": 11
+  },
+  "feature_importances": [
+    {
+      "Feature": "Rotational speed [rpm]",
+      "Importance": 0.21769870378522835
+    },
+    {
+      "Feature": "Power_W",
+      "Importance": 0.18434285009025658
+    },
+    {
+      "Feature": "Torque [Nm]",
+      "Importance": 0.17673834907607266
+    },
+    {
+      "Feature": "Tool wear [min]",
+      "Importance": 0.14031312173134905
+    },
+    {
+      "Feature": "Strain",
+      "Importance": 0.11529874766258437
+    },
+    {
+      "Feature": "Temp_diff",
+      "Importance": 0.0854521518223363
+    },
+    {
+      "Feature": "Air temperature [K]",
+      "Importance": 0.04537143009243939
+    },
+    {
+      "Feature": "Process temperature [K]",
+      "Importance": 0.02569621851755288
+    },
+    {
+      "Feature": "Type_L",
+      "Importance": 0.003752756396672946
+    },
+    {
+      "Feature": "Type_M",
+      "Importance": 0.0036787204065212614
+    },
+    {
+      "Feature": "Type_H",
+      "Importance": 0.001656950418986322
+    }
+  ]
+}

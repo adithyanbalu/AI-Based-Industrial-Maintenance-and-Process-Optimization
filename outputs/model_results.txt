@@ -1,28 +1,49 @@
 
-PREDICTIVE MAINTENANCE MODEL RESULTS
-====================================
-Dataset rows: 10000
-Training records: 8000
-Testing records: 2000
-Features used: ['Type', 'Air temperature [K]', 'Process temperature [K]', 'Rotational speed [rpm]', 'Torque [Nm]', 'Tool wear [min]']
+==============================================================
+AI-BASED INDUSTRIAL MAINTENANCE - IMPROVED MODEL RESULTS
+==============================================================
+Total Dataset Rows:       10000
+Training Samples:         8000 (Class 0: 7729, Class 1: 271)
+Testing Samples:          2000 (Class 0: 1932, Class 1: 68)
+Input Features Used:      ['Type', 'Air temperature [K]', 'Process temperature [K]', 'Rotational speed [rpm]', 'Torque [Nm]', 'Tool wear [min]']
+Domain Derived Features:  ['Temp_diff', 'Power_W', 'Strain']
+Target Column:            Machine failure
 
-Model: Random Forest Classifier
-Class weighting: balanced
+Model Architecture:
+-------------------
+Algorithm:                Random Forest Classifier
+Number of Estimators:     250
+Max Depth:                12
+Min Samples Split:        4
+Class Weighting:          balanced
+Class Imbalance Handling: Cost-sensitive balanced weights + physics domain features
 
-CLASSIFICATION REPORT
+EVALUATION METRICS (TEST SET, N=2000):
+----------------------------------------------
+Overall Accuracy:         98.55%
+Failure Class Precision:  76.00%
+Failure Class Recall:     83.82%  (Catches 57 of 68 failures!)
+Failure Class F1-Score:   0.7972
+ROC-AUC Score:            0.9823
+
+CONFUSION MATRIX:
+-----------------
+                   Predicted No Failure    Predicted Failure
+Actual No Failure:                 1914                   18
+Actual Failure:                      11                   57
+
+False Negatives (Missed Failures): 11 (Reduced from 24 in baseline to 11)
+False Positives (False Alarms):    18
+
+CLASSIFICATION REPORT:
+----------------------
               precision    recall  f1-score   support
 
   No Failure       0.99      0.99      0.99      1932
-     Failure       0.72      0.65      0.68        68
+     Failure       0.76      0.84      0.80        68
 
-    accuracy                           0.98      2000
-   macro avg       0.85      0.82      0.84      2000
-weighted avg       0.98      0.98      0.98      2000
+    accuracy                           0.99      2000
+   macro avg       0.88      0.91      0.89      2000
+weighted avg       0.99      0.99      0.99      2000
 
-
-CONFUSION MATRIX
-Rows = actual, columns = predicted
-[[1915   17]
- [  24   44]]
-
-ROC-AUC: 0.9612
+==============================================================
