@@ -26,7 +26,7 @@ The system integrates data preprocessing, physics-informed domain feature engine
 
 Developed as part of **Infosys Springboard Virtual Internship 7.0**:
 
-- **Adithyan B :** ML Model Comparison, Predictive Model Improvement, Joblib Serialization, Reusable Prediction Module, Streamlit Dashboard Architecture, and Integration.
+- **Adithyan B (Team Lead):** ML Model Comparison, Predictive Model Improvement, Joblib Serialization, Reusable Prediction Module, Streamlit Dashboard Architecture, and Integration.
 - **Hriday Kaustubh Machiraju:** Data Validation and Machine Monitoring.
 - **Dheepesh N:** Failure Diagnostics and Sensor Analysis.
 - **Ganga Vanaparthi:** Testing, Integration Verification, and Documentation.
@@ -38,7 +38,7 @@ Developed as part of **Infosys Springboard Virtual Internship 7.0**:
 Evaluation performed on a 20% stratified test set ($N=2,000$ records: $1,932$ normal, $68$ failures). Target leakage was eliminated by strictly excluding failure-cause indicator flags (`TWF`, `HDF`, `PWF`, `OSF`, `RNF`).
 
 | Model Candidate | Accuracy | Precision (Failure) | Recall (Failure) | F1-Score (Failure) | ROC-AUC | Missed Failures (FN) | False Alarms (FP) |
-|---|:---:|:---:|:---:|:---:|:---:|:---:|
+|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 | **Logistic Regression (Baseline)** | 96.75% | 63.64% | 10.29% | 0.1772 | 0.8994 | 61 | 4 |
 | **Logistic Regression (Balanced)** | 82.45% | 14.18% | 82.35% | 0.2419 | 0.9070 | 12 | 339 |
 | **Decision Tree (Baseline)** | 97.85% | 68.66% | 67.65% | 0.6815 | 0.8328 | 22 | 21 |
@@ -47,6 +47,7 @@ Evaluation performed on a 20% stratified test set ($N=2,000$ records: $1,932$ no
 | **Improved Random Forest (Selected)** | **98.55%** | **76.00%** | **83.82%** | **0.7972** | **0.9823** | **11** | **18** |
 
 ### Resolving the Accuracy Paradox
+
 On this imbalanced dataset (96.61% normal, 3.39% failure), baseline Logistic Regression achieves **96.75% accuracy**, yet misses **61 out of 68 actual breakdowns (Recall: 10.29%)**. In industrial maintenance, missed failures cause catastrophic breakdowns. Our **Improved Random Forest** with balanced weights and physics-informed features achieves **83.82% Recall**, reducing missed failures by over 54% (from 24 down to 11) with only 18 false alarms.
 
 ---
@@ -54,35 +55,55 @@ On this imbalanced dataset (96.61% normal, 3.39% failure), baseline Logistic Reg
 ## 🏗️ Repository Architecture
 
 ```text
-AI-Based-Industrial-Maintenance/
-│
-├── data/
-│   └── Dataset.csv                     # AI4I 2020 Predictive Maintenance dataset (10,000 rows)
+AI-Based-Industrial-Maintenance-and-Process-Optimization/
 │
 ├── src/
 │   ├── __init__.py
-│   ├── features.py                     # IndustrialFeatureEngineer (Physics domain features)
-│   ├── data_preprocessing.py           # Dataset inspection, null/duplicate audit, summary reports
-│   ├── failure_analysis.py             # Historical failure count and distribution visualization
-│   ├── model_comparison.py             # Multi-algorithm comparison suite (LR, DT, RF)
-│   ├── predictive_model.py             # Improved Random Forest training & evaluation
-│   └── prediction.py                   # Reusable inference engine (single & batch predictions)
+│   ├── data_preprocessing.py
+│   ├── data_validation.py
+│   ├── failure_analysis.py
+│   ├── features.py
+│   ├── machine_monitoring.py
+│   ├── model_comparison.py
+│   ├── prediction.py
+│   └── predictive_model.py
 │
 ├── dashboard/
-│   ├── app.py                          # Streamlit Industrial AI Command Center (6 views)
-│   ├── components.py                   # Reusable UI cards, Plotly charts, integration wrappers
-│   └── styles.py                       # Industrial dark theme styling tokens & circular gauges
+│   ├── app.py
+│   ├── components.py
+│   ├── styles.py
+│   └── views/
+│       ├── overview.py
+│       ├── prediction.py
+│       ├── batch.py
+│       ├── analytics.py
+│       ├── performance.py
+│       └── maintenance.py
 │
 ├── models/
-│   ├── best_model.pkl                  # Serialized Joblib pipeline
-│   └── model_metadata.json             # Metrics, confusion matrix, and feature importances
+│   ├── best_model.pkl
+│   └── model_metadata.json
 │
-├── outputs/                            # Model reports, comparison CSVs, and visualization charts
+├── outputs/
+│   ├── 01_uploaded_records.png
+│   ├── 02_validated_parameters.png
+│   ├── 03_workflow.png
+│   └── Other generated reports and visualizations
+│
+├── Tests/
+│   ├── test_integration.py
+│   ├── test_prediction.py
+│   ├── test_preprocessing.py
+│   └── test_validation.py
 │
 ├── tests/
-│   └── test_deliverables.py            # Automated pytest verification suite (9 tests)
+│   └── test_deliverables.py
 │
-├── requirements.txt                    # Project dependencies
+├── docs/
+│   ├── implementation.md
+│   └── testing_report.md
+│
+├── requirements.txt
 └── README.md
 ```
 
@@ -90,38 +111,70 @@ AI-Based-Industrial-Maintenance/
 
 ## ⚡ Getting Started & Running the Project
 
-### 1. Installation
-Clone repository and install dependencies:
+### 1. Clone the Repository
+
 ```bash
+git clone https://github.com/adithyanbalu/AI-Based-Industrial-Maintenance-and-Process-Optimization.git
+
+cd AI-Based-Industrial-Maintenance-and-Process-Optimization
+```
+
+### 2. Create a Virtual Environment
+
+Windows PowerShell:
+
+```powershell
+python -m venv venv
+.\venv\Scripts\Activate.ps1
+```
+
+If PowerShell blocks script execution, use Command Prompt:
+
+```cmd
+venv\Scripts\activate.bat
+```
+
+### 3. Install Dependencies
+
+```bash
+python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-### 2. Preprocess Dataset
+### 4. Preprocess Dataset
+
 ```bash
 python src/data_preprocessing.py
 ```
 
-### 3. Run Algorithm Comparison Suite
+### 5. Run Algorithm Comparison Suite
+
 ```bash
 python src/model_comparison.py
 ```
 
-### 4. Train & Save the Improved Model
+### 6. Train and Save the Improved Model
+
 ```bash
 python src/predictive_model.py
 ```
 
-### 5. Test Inference Engine
+### 7. Test the Inference Engine
+
 ```bash
 python src/prediction.py
 ```
 
-### 6. Run Automated Test Suite
+### 8. Run Automated Tests
+
 ```bash
-python -m pytest tests/test_deliverables.py -v
+python -m pytest -v
 ```
 
-### 7. Launch the Streamlit Industrial AI Command Center
+The current testing report records **32 passing automated tests** across preprocessing, validation, prediction, integration, and deliverables testing.
+
+### 9. Launch the Streamlit Dashboard
+
 ```bash
 streamlit run dashboard/app.py
 ```
@@ -130,12 +183,32 @@ streamlit run dashboard/app.py
 
 ## 🖥️ Streamlit Command Center Pages
 
-1. **Overview / Command Center:** Fleet telemetry overview, 6 KPI cards, donut class distribution, machine variant failure rates, failure mechanisms breakdown, and architecture insights.
-2. **Machine Failure Prediction:** Real-time parameter inputs, 5 one-click operating presets, online physics telemetry ($\Delta T$, Spindle Power, Overstrain Index), failure probability gauge, and diagnostic root factor explanations.
-3. **Batch CSV Analysis:** File uploader supporting multi-machine evaluation, downloadable template, missing value imputation, batch KPIs, and CSV export.
-4. **Failure Analytics:** Empirical scatter plot of spindle speed vs torque operating envelopes, parameter distribution boxplots, and statistical comparison tables.
-5. **Model Performance:** Candidate algorithm comparison matrix, grouped metric bar chart, confusion matrix heatmap ($N=2,000$), multi-model ROC curves, and Gini feature importances.
-6. **Maintenance Recommendations:** Deterministic, physics-grounded inspection rules (TWF, HDF, PWF, OSF, Nominal) and an interactive maintenance rule simulator.
+1. **Overview / Command Center:** Fleet telemetry overview, KPI cards, class distribution, machine variant failure rates, failure mechanisms breakdown, and architecture insights.
+2. **Machine Failure Prediction:** Real-time parameter inputs, operating presets, online physics telemetry, failure probability gauge, and diagnostic explanations.
+3. **Batch CSV Analysis:** CSV file uploader, multi-machine evaluation, missing value handling, batch KPIs, and downloadable prediction results.
+4. **Failure Analytics:** Historical failure analysis, operating parameter visualizations, and statistical comparison tables.
+5. **Model Performance:** Candidate algorithm comparison, evaluation metrics, confusion matrix, ROC curves, and feature importance.
+6. **Maintenance Recommendations:** Rule-based maintenance inspection guidance and an interactive maintenance simulator.
+
+---
+
+## 🧪 Testing and Documentation
+
+Project testing and implementation documentation are available in the `docs/` directory.
+
+- **Testing Report:** [`docs/testing_report.md`](docs/testing_report.md)
+- **Implementation Documentation:** [`docs/implementation.md`](docs/implementation.md)
+
+### Testing Summary
+
+- Automated tests: 32 passed.
+- Preprocessing tests: 3 passed.
+- Validation tests: 9 passed.
+- Prediction tests: 9 passed.
+- Integration tests: 2 passed.
+- Existing deliverables tests: 9 passed.
+
+Manual dashboard testing included normal machine inputs, high-risk predictions, CSV batch processing, failure analytics, model loading error handling, model performance, and maintenance recommendations.
 
 ---
 
