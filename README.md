@@ -26,7 +26,7 @@ The system integrates data preprocessing, physics-informed domain feature engine
 
 Developed as part of **Infosys Springboard Virtual Internship 7.0**:
 
-- **Adithyan B (Team Lead):** ML Model Comparison, Predictive Model Improvement, Joblib Serialization, Reusable Prediction Module, Streamlit Dashboard Architecture, and Integration.
+- **Adithyan B :** ML Model Comparison, Predictive Model Improvement, Joblib Serialization, Reusable Prediction Module, Streamlit Dashboard Architecture, and Integration.
 - **Hriday Kaustubh Machiraju:** Data Validation and Machine Monitoring.
 - **Dheepesh N:** Failure Diagnostics and Sensor Analysis.
 - **Ganga Vanaparthi:** Testing, Integration Verification, and Documentation.
