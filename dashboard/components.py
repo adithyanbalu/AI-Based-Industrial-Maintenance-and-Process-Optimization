@@ -50,49 +50,19 @@ except ImportError:
 
 def get_data_validator():
     """
-    Coordinates with Hriday's module (src/data_validation.py).
-    Normalizes return values across 2-tuple (is_valid, errors) and 3-tuple formats.
-    Falls back cleanly to src.prediction's internal validator if module is absent.
+    Uses the project's data_validation module
+    and adapts its output for dashboard pages.
     """
-    fn = None
-    try:
-        from src.data_validation import validate_machine_data
-        fn = validate_machine_data
-    except ImportError:
-        try:
-            from data_validation import validate_machine_data
-            fn = validate_machine_data
-        except ImportError:
-            pass
+    from src.data_validation import validate_records
 
-    if fn is not None:
-        def _wrapped_validator(df, *args, **kwargs):
-            try:
-                res = fn(df, *args, **kwargs)
-            except TypeError:
-                res = fn(df)
-            if isinstance(res, tuple):
-                if len(res) == 2:
-                    is_valid, errors = res
-                    val_df = (
-                        df[[c for c in MODEL_FEATURES if c in df.columns]].copy()
-                        if is_valid
-                        else pd.DataFrame()
-                    )
-                    return is_valid, errors, val_df
-                elif len(res) >= 3:
-                    return res[0], res[1], res[2]
-            return bool(res), [], df
+    def _wrapped_validator(df, *args, **kwargs):
+        valid_df, errors = validate_records(df)
 
-        return _wrapped_validator
+        is_valid = valid_df is not None and len(valid_df) == len(df)
 
-    # Resilient fallback to internal validator
-    from src.prediction import validate_input_dataframe
+        return is_valid, errors, valid_df
 
-    def _fallback_validator(df, allow_imputation=False, *args, **kwargs):
-        return validate_input_dataframe(df, allow_imputation=allow_imputation)
-
-    return _fallback_validator
+    return _wrapped_validator
 
 
 def get_maintenance_advisor():
