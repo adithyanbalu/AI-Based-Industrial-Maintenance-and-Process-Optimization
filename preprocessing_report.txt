@@ -1,0 +1,52 @@
+DATA PREPROCESSING INSPECTION REPORT
+========================================
+Source file: data/Dataset.csv
+Dataset shape (rows, columns): (10000, 14)
+
+FIRST FIVE ROWS
+----------------------------------------
+ UDI Product ID Type  Air temperature [K]  Process temperature [K]  Rotational speed [rpm]  Torque [Nm]  Tool wear [min]  Machine failure  TWF  HDF  PWF  OSF  RNF
+   1     M14860    M                298.1                    308.6                    1551         42.8                0                0    0    0    0    0    0
+   2     L47181    L                298.2                    308.7                    1408         46.3                3                0    0    0    0    0    0
+   3     L47182    L                298.1                    308.5                    1498         49.4                5                0    0    0    0    0    0
+   4     L47183    L                298.2                    308.6                    1433         39.5                7                0    0    0    0    0    0
+   5     L47184    L                298.2                    308.7                    1408         40.0                9                0    0    0    0    0    0
+
+COLUMN NAMES AND DATA TYPES
+----------------------------------------
+UDI: int64
+Product ID: object
+Type: object
+Air temperature [K]: float64
+Process temperature [K]: float64
+Rotational speed [rpm]: int64
+Torque [Nm]: float64
+Tool wear [min]: int64
+Machine failure: int64
+TWF: int64
+HDF: int64
+PWF: int64
+OSF: int64
+RNF: int64
+
+MISSING VALUES BY COLUMN
+----------------------------------------
+UDI: 0
+Product ID: 0
+Type: 0
+Air temperature [K]: 0
+Process temperature [K]: 0
+Rotational speed [rpm]: 0
+Torque [Nm]: 0
+Tool wear [min]: 0
+Machine failure: 0
+TWF: 0
+HDF: 0
+PWF: 0
+OSF: 0
+RNF: 0
+Total missing cells: 0
+
+DUPLICATE ROWS
+----------------------------------------
+Duplicate rows: 0

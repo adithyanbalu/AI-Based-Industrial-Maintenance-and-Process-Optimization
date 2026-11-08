@@ -1,0 +1,6 @@
+Missing values: 0
+Duplicate rows: 0
+No failure: 9661
+Failure: 339
+No failure percentage: 96.61 %
+Failure percentage: 3.39 %
