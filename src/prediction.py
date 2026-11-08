@@ -24,23 +24,16 @@ import pandas as pd
 # Import feature engineer
 try:
     from src.features import IndustrialFeatureEngineer, MODEL_FEATURES
+    from src.validation import validate_machine_data, NUMERIC_BOUNDS, VALID_TYPES
 except ImportError:
     from features import IndustrialFeatureEngineer, MODEL_FEATURES
+    from validation import validate_machine_data, NUMERIC_BOUNDS, VALID_TYPES
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_MODEL_PATH = ROOT / "models" / "best_model.pkl"
 DEFAULT_METADATA_PATH = ROOT / "models" / "model_metadata.json"
 
-VALID_TYPES = {"L", "M", "H"}
-
-# Plausible physical operating boundaries for industrial machinery in AI4I benchmark
-FEATURE_BOUNDS = {
-    "Air temperature [K]": (270.0, 330.0),
-    "Process temperature [K]": (280.0, 340.0),
-    "Rotational speed [rpm]": (500.0, 4000.0),
-    "Torque [Nm]": (1.0, 150.0),
-    "Tool wear [min]": (0.0, 400.0),
-}
+FEATURE_BOUNDS = NUMERIC_BOUNDS
 
 
 class ModelLoadError(Exception):
@@ -84,99 +77,10 @@ def load_model_metadata(metadata_path: Optional[Union[str, Path]] = None) -> Dic
 
 
 def validate_input_dataframe(
-    df: pd.DataFrame,
-    allow_imputation: bool = False,
+    df: pd.DataFrame, allow_imputation: bool = False,
 ) -> Tuple[bool, List[str], pd.DataFrame]:
-    """
-    Validates machine parameters before passing to the ML model:
-    - Checks required columns presence
-    - Validates data types and casts appropriately
-    - Checks for missing/null values (can impute if allow_imputation=True)
-    - Validates categorical machine Type (L, M, H)
-    - Validates physical numerical boundaries
-    """
-    errors = []
-    if not isinstance(df, pd.DataFrame):
-        return False, ["Input must be a pandas DataFrame."], pd.DataFrame()
-
-    if df.empty:
-        return False, ["Input DataFrame contains zero records."], pd.DataFrame()
-
-    # Column presence check
-    missing_cols = [c for c in MODEL_FEATURES if c not in df.columns]
-    if missing_cols:
-        errors.append(f"Missing required feature columns: {missing_cols}")
-        return False, errors, pd.DataFrame()
-
-    validated_df = df[MODEL_FEATURES].copy()
-
-    # Check for nulls
-    null_counts = validated_df.isnull().sum()
-    if null_counts.any():
-        cols_with_nulls = null_counts[null_counts > 0].to_dict()
-        if allow_imputation:
-            # Impute standard nominal baselines
-            defaults = {
-                "Type": "M",
-                "Air temperature [K]": 300.0,
-                "Process temperature [K]": 310.0,
-                "Rotational speed [rpm]": 1500.0,
-                "Torque [Nm]": 40.0,
-                "Tool wear [min]": 0.0,
-            }
-            for col, val in defaults.items():
-                if col in validated_df.columns:
-                    validated_df[col] = validated_df[col].fillna(val)
-        else:
-            errors.append(f"Input contains missing/null values: {cols_with_nulls}")
-
-    # Validate Type
-    validated_df["Type"] = validated_df["Type"].fillna("M").astype(str).str.strip().str.upper()
-    invalid_types = set(validated_df["Type"]) - VALID_TYPES
-    if invalid_types:
-        if allow_imputation:
-            # Default invalid types to most frequent 'L' or 'M'
-            validated_df["Type"] = validated_df["Type"].replace(list(invalid_types), "M")
-        else:
-            errors.append(
-                f"Invalid Machine Type(s) detected: {invalid_types}. Must be one of: {VALID_TYPES}"
-            )
-
-    # Numerical coercion and bound checks
-    for col, (min_v, max_v) in FEATURE_BOUNDS.items():
-        try:
-            validated_df[col] = pd.to_numeric(validated_df[col], errors="coerce")
-        except Exception:
-            errors.append(f"Could not parse column '{col}' as numeric.")
-            continue
-
-        if validated_df[col].isnull().any():
-            if allow_imputation:
-                defaults = {
-                    "Air temperature [K]": 300.0,
-                    "Process temperature [K]": 310.0,
-                    "Rotational speed [rpm]": 1500.0,
-                    "Torque [Nm]": 40.0,
-                    "Tool wear [min]": 0.0,
-                }
-                validated_df[col] = validated_df[col].fillna(defaults[col])
-            else:
-                errors.append(f"Column '{col}' contains non-numeric or unparsable values.")
-
-        out_of_bounds = validated_df[
-            (validated_df[col] < min_v) | (validated_df[col] > max_v)
-        ]
-        if not out_of_bounds.empty:
-            if allow_imputation:
-                validated_df[col] = validated_df[col].clip(min_v, max_v)
-            else:
-                errors.append(
-                    f"Column '{col}' has {len(out_of_bounds)} values outside plausible physical range [{min_v}, {max_v}]."
-                )
-
-    is_valid = len(errors) == 0
-    return is_valid, errors, validated_df
-
+    """Backward-compatible public wrapper around the central validator."""
+    return validate_machine_data(df, allow_imputation=allow_imputation)
 
 
 def generate_diagnostic_explanation(row: pd.Series, prob: float) -> str:
@@ -277,7 +181,15 @@ def predict_machines(
         - 'Risk_Level': 'Low Risk', 'Medium / Warning', 'High Risk / Critical'
         - 'Diagnostic_Notes': string explaining risk factors
     """
-    # 1. Normalize input to DataFrame
+    # 1. Validate decision threshold before doing any model work
+    try:
+        threshold = float(threshold)
+    except (TypeError, ValueError, OverflowError):
+        raise InvalidInputError("Prediction threshold must be a number between 0 and 1.")
+    if not np.isfinite(threshold) or not 0.0 <= threshold <= 1.0:
+        raise InvalidInputError("Prediction threshold must be between 0 and 1.")
+
+    # 2. Normalize input to DataFrame
     if isinstance(input_data, dict):
         df_raw = pd.DataFrame([input_data])
     elif isinstance(input_data, list):
@@ -292,22 +204,25 @@ def predict_machines(
             "Expected pandas DataFrame, dict, or list of dicts."
         )
 
-    # 2. Validate input
+    # 3. Validate input before model loading or inference
     is_valid, error_list, validated_df = validate_input_dataframe(df_raw, allow_imputation=allow_imputation)
     if not is_valid:
         raise InvalidInputError(
             "Machine parameter validation failed:\n" + "\n".join(f"- {e}" for e in error_list)
         )
 
-    # 3. Load model
+    # 4. Load model only after all records pass validation
     model = load_prediction_model(model_path)
 
-    # 4. Generate predictions
+    # 5. Generate predictions
     probs = model.predict_proba(validated_df)[:, 1]
     preds = (probs >= threshold).astype(int)
 
-    # 5. Build results DataFrame
+    # 6. Build results DataFrame
     results_df = df_raw.copy()
+    # Reflect explicitly imputed values in exported results; retain any extra CSV columns.
+    for feature in MODEL_FEATURES:
+        results_df[feature] = validated_df[feature].values
     results_df["Prediction"] = preds
     results_df["Prediction_Label"] = np.where(preds == 1, "Failure", "No Failure")
     results_df["Status"] = np.where(preds == 1, "Failure", "Normal")
@@ -351,9 +266,11 @@ def predict_single(
     if missing:
         raise InvalidInputError(f"Missing required parameters for single prediction: {missing}")
 
-    data["Type"] = str(data["Type"]).strip().upper()
-    for col in ["Air temperature [K]", "Process temperature [K]", "Rotational speed [rpm]", "Torque [Nm]", "Tool wear [min]"]:
-        data[col] = float(data[col])
+    # Validate raw values first so malformed values become readable domain errors,
+    # rather than leaking Python float-conversion exceptions to the dashboard.
+    valid, errors, _ = validate_input_dataframe(pd.DataFrame([data]))
+    if not valid:
+        raise InvalidInputError("Single-machine input validation failed:\n" + "\n".join(f"- {e}" for e in errors))
 
     res_df = predict_machines(data, model_path=model_path)
     return res_df.iloc[0].to_dict()
