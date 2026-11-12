@@ -1,0 +1,44 @@
+============================= test session starts =============================
+platform win32 -- Python 3.14.7, pytest-9.2.0, pluggy-1.7.0 -- C:\Users\pavan\AI-Based-Industrial-Maintenance-and-Process-Optimization\venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\pavan\AI-Based-Industrial-Maintenance-and-Process-Optimization
+plugins: anyio-4.15.1
+collecting ... collected 35 items
+
+Tests/test_deliverables.py::test_dataset_integrity PASSED                [  2%]
+Tests/test_deliverables.py::test_feature_engineering_transformer PASSED  [  5%]
+Tests/test_deliverables.py::test_saved_model_and_metadata PASSED         [  8%]
+Tests/test_deliverables.py::test_model_comparison_artifacts PASSED       [ 11%]
+Tests/test_deliverables.py::test_prediction_single_normal PASSED         [ 14%]
+Tests/test_deliverables.py::test_prediction_single_hazard PASSED         [ 17%]
+Tests/test_deliverables.py::test_prediction_batch_dataframe PASSED       [ 20%]
+Tests/test_deliverables.py::test_prediction_validation_rejections PASSED [ 22%]
+Tests/test_deliverables.py::test_maintenance_advisor_rules PASSED        [ 25%]
+Tests/test_integration.py::test_csv_to_prediction_integration PASSED     [ 28%]
+Tests/test_integration.py::test_multiple_machine_records_integration PASSED [ 31%]
+Tests/test_prediction.py::test_valid_machine_input PASSED                [ 34%]
+Tests/test_prediction.py::test_missing_required_column PASSED            [ 37%]
+Tests/test_prediction.py::test_invalid_machine_type PASSED               [ 40%]
+Tests/test_prediction.py::test_empty_dataframe PASSED                    [ 42%]
+Tests/test_prediction.py::test_out_of_range_temperature PASSED           [ 45%]
+Tests/test_prediction.py::test_risk_level_classification PASSED          [ 48%]
+Tests/test_prediction.py::test_single_machine_prediction PASSED          [ 51%]
+Tests/test_prediction.py::test_multiple_machine_predictions PASSED       [ 54%]
+Tests/test_prediction.py::test_missing_input_rejected PASSED             [ 57%]
+Tests/test_preprocessing.py::test_preprocessing_script_executes PASSED   [ 60%]
+Tests/test_preprocessing.py::test_preprocessing_report_generated PASSED  [ 62%]
+Tests/test_preprocessing.py::test_preprocessing_image_generated PASSED   [ 65%]
+Tests/test_preprocessing.py::test_dataset_expected_shape PASSED          [ 68%]
+Tests/test_preprocessing.py::test_dataset_has_no_missing_values PASSED   [ 71%]
+Tests/test_preprocessing.py::test_dataset_has_no_duplicate_rows PASSED   [ 74%]
+Tests/test_validation.py::test_valid_machine_input PASSED                [ 77%]
+Tests/test_validation.py::test_missing_required_column PASSED            [ 80%]
+Tests/test_validation.py::test_invalid_machine_type PASSED               [ 82%]
+Tests/test_validation.py::test_missing_values_rejected PASSED            [ 85%]
+Tests/test_validation.py::test_invalid_numerical_value_rejected PASSED   [ 88%]
+Tests/test_validation.py::test_out_of_range_value_rejected PASSED        [ 91%]
+Tests/test_validation.py::test_empty_dataframe_rejected PASSED           [ 94%]
+Tests/test_validation.py::test_imputation_enabled_for_missing_values PASSED [ 97%]
+Tests/test_validation.py::test_imputation_clips_out_of_range_values PASSED [100%]
+
+============================= 35 passed in 3.65s ==============================

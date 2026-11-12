@@ -4,6 +4,7 @@ import sys
 from pathlib import Path
 
 import pytest
+import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT_PATH = ROOT / "src" / "data_preprocessing.py"
@@ -63,3 +64,16 @@ def test_preprocessing_image_generated(preprocessing_run):
 
     with IMAGE_PATH.open("rb") as image_file:
         assert image_file.read(8) == b"\x89PNG\r\n\x1a\n"
+def test_dataset_expected_shape():
+    df = pd.read_csv(DATA_PATH)
+    assert df.shape == (10000, 14)
+
+
+def test_dataset_has_no_missing_values():
+    df = pd.read_csv(DATA_PATH)
+    assert df.isnull().sum().sum() == 0
+
+
+def test_dataset_has_no_duplicate_rows():
+    df = pd.read_csv(DATA_PATH)
+    assert df.duplicated().sum() == 0
