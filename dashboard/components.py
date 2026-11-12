@@ -56,10 +56,8 @@ def get_data_validator():
     from src.data_validation import validate_records
 
     def _wrapped_validator(df, *args, **kwargs):
-        valid_df, errors = validate_records(df)
-
-        is_valid = valid_df is not None and len(valid_df) == len(df)
-
+        valid_df, errors = validate_records(df, allow_imputation=kwargs.get("allow_imputation", False))
+        is_valid = not errors and valid_df is not None and len(valid_df) == len(df)
         return is_valid, errors, valid_df
 
     return _wrapped_validator

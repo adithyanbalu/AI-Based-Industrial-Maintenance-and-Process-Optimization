@@ -7,6 +7,7 @@ Infosys Springboard Virtual Internship 7.0
 
 import numpy as np
 import pandas as pd
+from src.validation import validate_machine_data
 from sklearn.base import BaseEstimator, TransformerMixin
 
 MODEL_FEATURES = [
@@ -36,6 +37,13 @@ class IndustrialFeatureEngineer(BaseEstimator, TransformerMixin):
             df = X.copy()
         else:
             df = pd.DataFrame(X, columns=MODEL_FEATURES)
+
+        # Defensive boundary: the feature transformer must never manufacture
+        # derived features from incomplete or invalid telemetry.
+        is_valid, errors, validated = validate_machine_data(df)
+        if not is_valid:
+            raise ValueError("Feature engineering rejected invalid machine input: " + "; ".join(errors))
+        df = validated
 
         # Temperature differential
         df["Temp_diff"] = (

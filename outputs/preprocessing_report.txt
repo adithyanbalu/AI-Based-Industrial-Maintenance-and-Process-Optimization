@@ -1,6 +1,6 @@
 DATA PREPROCESSING INSPECTION REPORT
 ========================================
-Source file: data\Dataset.csv
+Source file: data/Dataset.csv
 Dataset shape (rows, columns): (10000, 14)
 
 FIRST FIVE ROWS
@@ -15,8 +15,8 @@ FIRST FIVE ROWS
 COLUMN NAMES AND DATA TYPES
 ----------------------------------------
 UDI: int64
-Product ID: str
-Type: str
+Product ID: object
+Type: object
 Air temperature [K]: float64
 Process temperature [K]: float64
 Rotational speed [rpm]: int64

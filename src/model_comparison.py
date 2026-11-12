@@ -1,3 +1,4 @@
+"""
 AI-Based Industrial Maintenance and Process Optimization System
 Machine Learning Algorithm Comparison Module
 Module Owner: Adithyan B (Team Lead)
