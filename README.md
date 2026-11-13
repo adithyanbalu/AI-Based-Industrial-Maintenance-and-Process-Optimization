@@ -1,432 +1,228 @@
 # 🏭 AI-Based Industrial Maintenance and Process Optimization System
 
+### An Intelligent Predictive Maintenance & Industrial Analytics Platform
+
 <p align="center">
-  <b>Predictive Maintenance Command Center & Telemetry Intelligence</b>
+  <strong>Predict failures. Understand machine behavior. Make smarter maintenance decisions.</strong>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Internship-Infosys%20Springboard%207.0-blue?style=for-the-badge" alt="Infosys Springboard Internship 7.0"/>
-  <img src="https://img.shields.io/badge/Python-3.10%2B-yellow?style=for-the-badge&logo=python&logoColor=white" alt="Python"/>
-  <img src="https://img.shields.io/badge/Framework-Streamlit-red?style=for-the-badge&logo=streamlit&logoColor=white" alt="Streamlit"/>
-  <img src="https://img.shields.io/badge/Domain-Predictive%20Maintenance-green?style=for-the-badge" alt="Predictive Maintenance"/>
-  <img src="https://img.shields.io/badge/Model-Random%20Forest%20v2.1-cyan?style=for-the-badge" alt="Random Forest"/>
-  <img src="https://img.shields.io/badge/Tests-60%20Passed-brightgreen?style=for-the-badge" alt="60 Tests Passed"/>
+  <img src="https://img.shields.io/badge/Python-3.x-blue?logo=python&logoColor=white" />
+  <img src="https://img.shields.io/badge/Machine%20Learning-Scikit--learn-orange?logo=scikitlearn&logoColor=white" />
+  <img src="https://img.shields.io/badge/Dashboard-Streamlit-FF4B4B?logo=streamlit&logoColor=white" />
+  <img src="https://img.shields.io/badge/Data%20Visualization-Plotly-3F4F75?logo=plotly&logoColor=white" />
+  <img src="https://img.shields.io/badge/Testing-Pytest-green?logo=pytest&logoColor=white" />
 </p>
 
 ---
 
 ## 📌 1. Project Overview
 
-Industrial machinery failures can cause unexpected plant downtime, increased maintenance costs, equipment damage, and production disruptions.
+Unexpected industrial machine failures can cause production downtime, increased maintenance expenses, equipment damage, and operational inefficiencies.
 
-The **AI-Based Industrial Maintenance and Process Optimization System** is a machine learning-based predictive maintenance application developed using the **AI4I 2020 Predictive Maintenance Dataset**, containing 10,000 machine records.
+The **AI-Based Industrial Maintenance and Process Optimization System** is an intelligent, dataset-driven predictive maintenance platform developed to help identify potential machine failures using machine operating parameters and machine learning.
 
-The system analyses machine operating conditions and predicts potential machine failures using machine learning techniques.
+The system analyzes industrial machine data, applies data preprocessing and feature engineering techniques, evaluates multiple machine learning algorithms, and uses an improved Random Forest model to predict potential machine failures.
 
-It integrates:
+It also provides an interactive Streamlit dashboard where users can analyze machine conditions, perform individual and batch predictions, explore failure patterns, evaluate model performance, and access maintenance recommendations.
 
-- Dataset analysis and preprocessing.
-- Data validation and cleaning.
-- Feature engineering.
-- Machine learning model comparison.
-- Improved Random Forest classification.
-- Individual machine failure prediction.
-- Batch CSV prediction.
-- Failure analytics and visualization.
-- Maintenance insights.
-- Interactive Streamlit dashboard.
-- Automated testing and quality assurance.
+The project uses the **AI4I 2020 Predictive Maintenance Dataset**, containing 10,000 records and 14 columns.
 
-The main objective is to identify potential failures early and support preventive maintenance decisions.
-
----
+> **Project scope:** This is a dataset-based predictive maintenance and decision-support system. It does not claim live industrial IoT connectivity, physical sensor integration, or automated factory control.
 
 ## 🎯 2. Project Objectives
 
-- Analyse industrial machine operating conditions.
-- Identify patterns associated with machine failures.
-- Develop a machine learning-based failure prediction model.
-- Improve failure detection performance.
-- Reduce false negatives in machine failure prediction.
-- Provide individual and batch prediction functionality.
-- Visualize machine failure statistics.
-- Provide maintenance-related insights.
-- Validate input data and handle invalid files.
-- Build an interactive predictive maintenance dashboard.
+- Analyze industrial machine operating data to understand failure patterns.
+- Identify important parameters associated with machine failures.
+- Develop and compare multiple machine learning classification models.
+- Improve failure detection using class balancing and feature engineering.
+- Predict machine failure risks using an optimized Random Forest model.
+- Support individual machine predictions and batch CSV analysis.
+- Visualize machine performance, failure distributions, and important features.
+- Generate understandable, rule-based maintenance recommendations.
+- Build a user-friendly industrial analytics dashboard.
+- Validate the system through automated testing and integration checks.
 
----
+## 🛠️ 3. Technology Stack
 
-## 👥 3. Project Team & Responsibilities
-
-Developed as part of **Infosys Springboard Virtual Internship 7.0 – Artificial Intelligence Track**.
-
-| Team Member | Responsibilities |
+| Category | Technologies |
 |---|---|
-| Adithyan B (Team Lead) | ML Model Comparison, Predictive Model Improvement, Joblib Serialization, Reusable Prediction Module, Streamlit Dashboard Architecture, and Integration |
-| Hriday Kaustubh Machiraju | Data Validation and Machine Monitoring |
-| Dheepesh N | Failure Diagnostics and Sensor Analysis |
-| Ganga Vanaparthi | Testing, Integration Verification, Quality Assurance, and Documentation |
+| Programming Language | Python |
+| Data Processing | Pandas, NumPy |
+| Machine Learning | Scikit-learn |
+| ML Algorithms | Logistic Regression, Decision Tree, Random Forest |
+| Dashboard | Streamlit |
+| Data Visualization | Plotly, Matplotlib |
+| Model Serialization | Joblib / Pickle |
+| Testing | Pytest, Streamlit AppTest |
+| Version Control | Git, GitHub |
 
----
+## 📊 4. Dataset Information
 
-# 🚀 4. Project Development – Milestone 1 to Milestone 4
+**Dataset:** AI4I 2020 Predictive Maintenance Dataset
 
-## Milestone 1 – Dataset Analysis and Initial Model Development
+The dataset contains simulated industrial machine operating conditions and failure information.
 
-### Objective
-
-Understand the predictive maintenance dataset, identify machine operating parameters, analyse failure distribution, and establish an initial machine learning baseline.
-
-### Dataset Used
-
-**AI4I 2020 Predictive Maintenance Dataset**
-
-- Total records: 10,000
-- Total attributes: 14
-- Normal machine records: 9,661
-- Machine failure records: 339
-- Missing values: 0
-- Duplicate records: 0
-
-### Dataset Features
-
-| Feature | Description |
+| Property | Description |
 |---|---|
-| UDI | Unique data identifier |
-| Product ID | Machine product identifier |
-| Type | Product quality type |
-| Air temperature [K] | Air temperature |
-| Process temperature [K] | Process temperature |
-| Rotational speed [rpm] | Machine rotational speed |
-| Torque [Nm] | Machine torque |
-| Tool wear [min] | Tool wear time |
-| Machine failure | Target variable |
-| TWF | Tool Wear Failure |
-| HDF | Heat Dissipation Failure |
-| PWF | Power Failure |
-| OSF | Overstrain Failure |
-| RNF | Random Failure |
+| Dataset | AI4I 2020 Predictive Maintenance |
+| Total Records | 10,000 |
+| Total Columns | 14 |
+| Target Variable | Machine Failure |
+| Problem Type | Binary Classification |
+| Normal Records | 9,661 |
+| Failure Records | 339 |
+| Normal Distribution | 96.61% |
+| Failure Distribution | 3.39% |
 
-### Initial Data Analysis
+### Important Machine Parameters
 
-The dataset was analysed to understand:
+- Product Type
+- Air Temperature (K)
+- Process Temperature (K)
+- Rotational Speed (rpm)
+- Torque (Nm)
+- Tool Wear (min)
 
-- Machine failure distribution.
-- Operating temperature.
-- Rotational speed.
-- Torque.
-- Tool wear.
-- Failure-related patterns.
+The dataset also contains failure-cause indicators. These are excluded from the predictive feature set to prevent target leakage.
 
-The initial dataset validation confirmed 10,000 records and 14 attributes, with no missing values or duplicate records.
+## 🧠 5. Machine Learning Approach
 
-### Initial Machine Learning Baseline
+The project follows a structured machine learning workflow.
 
-A baseline Random Forest model was evaluated.
+1. **Data Preprocessing:** Load the dataset, inspect its structure, and prepare the data for analysis.
+2. **Data Validation:** Check input parameters, missing values, invalid values, and operating ranges.
+3. **Exploratory Data Analysis:** Investigate machine characteristics and failure distributions.
+4. **Feature Engineering:** Develop additional informative features from machine operating parameters.
+5. **Model Development:** Train and compare multiple classification algorithms.
+6. **Model Evaluation:** Evaluate accuracy, precision, recall, F1-score, ROC-AUC, and confusion matrices.
+7. **Model Selection:** Select the improved Random Forest model based on its overall evaluation performance.
+8. **Prediction:** Generate machine failure predictions and risk information.
+9. **Maintenance Guidance:** Provide rule-based recommendations based on machine operating conditions.
 
-| Evaluation Metric | Baseline Result |
-|---|---:|
-| Accuracy | 97.95% |
-| Precision | 72.13% |
-| Recall | 64.71% |
-| F1-Score | 0.6822 |
-| ROC-AUC | 0.9612 |
-| False Negatives | 24 |
-| False Positives | 17 |
+### Model Comparison
 
-**Milestone 1 Outcome:** Dataset analysis, data understanding, preprocessing foundations, and initial model evaluation.
+The selected model is an improved Random Forest classifier designed to improve the detection of minority-class machine failures.
 
----
+The following comparison represents the project's documented evaluation on a stratified 20% test set containing 2,000 records.
 
-## Milestone 2 – Data Processing and System Development
+| Model | Accuracy | Failure Recall | Failure F1-score |
+|---|---:|---:|---:|
+| Logistic Regression (Baseline) | 96.75% | 10.29% | 0.1772 |
+| Logistic Regression (Balanced) | 82.45% | 82.35% | 0.2419 |
+| Decision Tree (Baseline) | 97.85% | 67.65% | 0.6815 |
+| Decision Tree (Balanced) | 93.65% | 85.29% | 0.4774 |
+| Random Forest (Baseline) | 97.95% | 64.71% | 0.6822 |
+| **Improved Random Forest (Selected)** | **98.55%** | **83.82%** | **0.7972** |
 
-### Objective
+### Why Failure Recall Matters
 
-Develop the data processing and analytical components required for the predictive maintenance system.
+Industrial datasets are often imbalanced, meaning normal machine records greatly outnumber failure records.
 
-### Development Areas
+A model can achieve high accuracy while still missing a significant number of actual failures.
 
-- Dataset loading and processing.
-- Data validation.
-- Handling machine operating parameters.
-- Failure analysis.
-- Feature preparation.
-- Machine monitoring functionality.
-- Preparation of reusable Python modules.
+Therefore, this project emphasizes failure detection and recall alongside accuracy.
 
-### Main Development Components
-
-| Component | Purpose |
-|---|---|
-| Data Preprocessing | Loads and prepares machine data |
-| Data Validation | Checks required input fields and data quality |
-| Feature Engineering | Creates additional machine-related features |
-| Failure Analysis | Analyses failure patterns and statistics |
-| Machine Monitoring | Supports machine condition analysis |
-
-### Dataset Quality Verification
-
-The preprocessing workflow generated a report and visualization.
-
-Verified dataset results:
-
-| Check | Result |
-|---|---:|
-| Dataset records | 10,000 |
-| Dataset columns | 14 |
-| Missing values | 0 |
-| Duplicate records | 0 |
-
-**Milestone 2 Outcome:** Development of the data processing, validation, and analytical components used by the predictive maintenance application.
-
----
-
-## Milestone 3 – Machine Learning Improvement and Dashboard Integration
-
-### Objective
-
-Develop and evaluate improved machine learning models and integrate prediction functionality into an interactive dashboard.
-
-### Model Development
-
-Multiple machine learning algorithms were compared to identify a suitable model for machine failure prediction.
-
-The candidate models included:
-
-- Logistic Regression.
-- Balanced Logistic Regression.
-- Decision Tree.
-- Balanced Decision Tree.
-- Random Forest.
-- Improved Random Forest.
-
-### Feature Engineering
-
-Machine operating parameters are used to derive additional information for machine condition analysis.
-
-The system incorporates physics-informed features to support failure prediction and machine monitoring.
-
-Failure-cause indicator flags (`TWF`, `HDF`, `PWF`, `OSF`, and `RNF`) are excluded from model input features to avoid target leakage.
-
-### Selected Model
-
-**Improved Random Forest Classifier**
-
-The selected model achieved:
+The selected Improved Random Forest achieved:
 
 - Accuracy: 98.55%
-- Precision: 76.00%
-- Recall: 83.82%
-- F1-Score: 0.7972
+- Failure Precision: 76.00%
+- Failure Recall: 83.82%
+- Failure F1-score: 0.7972
 - ROC-AUC: 0.9823
-- False Negatives: 11
-- False Positives: 18
+- Missed Failures: 11 out of 68
 
-### Dashboard Integration
+These results demonstrate the importance of evaluating predictive maintenance models beyond accuracy alone.
 
-The Streamlit application provides the following major sections:
+## 🖥️ 6. Interactive Streamlit Dashboard
 
-1. Command Center.
-2. Failure Prediction.
-3. Batch CSV Analysis.
-4. Failure Analytics.
-5. Model Performance.
-6. Maintenance Insights.
+The project includes a multi-section industrial analytics dashboard with six major modules.
 
-### Prediction Functionality
+### 1. Overview – Industrial Command Center
 
-The application supports:
+Provides an overview of the dataset and machine failure information.
 
-- Individual machine parameter inputs.
+Features:
+- Dataset summary and key performance indicators.
+- Machine failure distribution.
+- Machine variant analysis.
+- Failure mechanism visualization.
+- Important industrial insights.
+
+### 2. Single Machine Prediction
+
+Allows users to enter individual machine operating parameters and obtain a failure prediction.
+
+Features:
+- Interactive machine parameter inputs.
+- Machine type selection.
+- Operating parameter validation.
 - Failure probability estimation.
-- Normal and failure risk classification.
-- Batch CSV processing.
-- Machine failure analytics.
-- Maintenance-related recommendations.
+- Risk classification.
+- Diagnostic explanations.
 
-**Milestone 3 Outcome:** Machine learning model comparison, improved prediction functionality, and integration of the predictive maintenance dashboard.
+### 3. Batch CSV Analysis
 
----
+Allows users to upload a CSV file containing multiple machine records and analyze them together.
 
-## Milestone 4 – Testing, Quality Assurance and Documentation
+Features:
+- CSV file upload.
+- Input validation and missing-value handling.
+- Invalid and out-of-range value detection.
+- Batch machine failure predictions.
+- Failure risk analysis.
+- Downloadable prediction results.
+- Preservation of additional customer-provided CSV columns.
 
-### Objective
+### 4. Failure Analytics
 
-Verify application functionality, identify issues, execute automated tests, perform dashboard testing, and update project documentation.
+Provides insights into machine failure patterns and operating conditions.
 
-### Assigned Responsibility
+Features:
+- Failure distribution analysis.
+- Machine parameter comparisons.
+- Failure mechanism analysis.
+- Statistical visualizations.
+- Identification of important operating patterns.
 
-**Ganga Vanaparthi – Testing, Quality Assurance and Documentation**
+### 5. Model Performance
 
-### Activities Performed
+Provides an overview of machine learning model evaluation.
 
-- Reviewed the existing automated test suite.
-- Executed all automated tests.
-- Reviewed feature engineering test coverage.
-- Verified dataset dimensions.
-- Checked missing values and duplicate records.
-- Tested prediction functionality.
-- Tested batch CSV prediction.
-- Checked CSV input validation.
-- Tested validation and error-handling scenarios.
-- Tested dashboard modules.
-- Performed end-to-end workflow verification.
-- Recorded test execution results.
-- Updated project README documentation.
-- Documented project limitations and future improvements.
+Features:
+- Model comparison.
+- Accuracy and classification metrics.
+- Confusion matrix.
+- ROC curves.
+- Feature importance visualization.
+- Model performance analysis.
 
-### Automated Testing
+### 6. Maintenance Insights
 
-Testing was performed using **Pytest**.
+Provides rule-based maintenance guidance using machine operating conditions.
 
-Command:
+Features:
+- Machine condition analysis.
+- Tool wear assessment.
+- Maintenance recommendations.
+- Risk-based inspection guidance.
+- Interactive maintenance insights.
 
-```bash
-python -m pytest tests/ -v
-```
+## 🏗️ 7. Project Architecture
 
-**Recorded Result: 69 passed, 0 failed.**
-
-| Test File | Coverage |
-|---|---|
-| test_dashboard_integration.py | Dashboard view execution (all 6 views), batch validation distinction, extra columns, advisor integration |
-| test_deliverables.py | Project deliverables and maintenance advisor tests |
-| test_integration.py | Integration testing |
-| test_milestone4_validation.py | Milestone 4 validation scenarios |
-| test_prediction.py | Individual and batch prediction tests |
-| test_preprocessing.py | Dataset preprocessing tests |
-| test_validation.py | Input validation and error-handling tests |
-| **Total** | **69 tests passed** |
-
-### Manual Dashboard Testing
-
-| Dashboard Module | Testing Performed | Result |
-|---|---|---|
-| Command Center | Dashboard loading and overview | PASS |
-| Failure Prediction | Individual machine prediction | PASS |
-| Batch CSV Analysis | Dataset upload and batch prediction | PASS |
-| Failure Analytics | Failure statistics and visualizations | PASS |
-| Model Performance | Evaluation metrics display | PASS |
-| Maintenance Insights | Machine health and maintenance information | PASS |
-| CSV Export | Export functionality checked | Tested |
-
-### Input Validation Testing
-
-**Test 1 – Valid CSV**
-
-- Uploaded the original dataset.
-- Required columns were detected.
-- Validation passed.
-- Batch prediction completed.
-
-Result: PASS
-
-**Test 2 – Malformed CSV**
-
-- Uploaded a malformed CSV file.
-- The application rejected the file.
-- A CSV parsing error was displayed.
-
-Result: REJECTED
-
-Observation: The file was rejected, but the displayed parser error is technical. More user-friendly error handling can be implemented.
-
-**Test 3 – Missing Required Columns**
-
-- Uploaded a CSV with only `Machine`, `Temperature`, and `Speed`.
-- Required column validation failed.
-- The application listed the missing columns.
-- Prediction was not executed.
-
-Result: PASS
-
-### End-to-End Testing
-
-The following workflow was manually verified:
-
-1. Launch the Streamlit application.
-2. Open the Command Center.
-3. Enter machine operating parameters.
-4. Generate an individual prediction.
-5. Upload a valid CSV dataset.
-6. Run batch predictions.
-7. View failure analytics.
-8. Review model performance.
-9. Open maintenance insights.
-
-Result: PASS
-
-### Testing Report
-
-Automated test output is saved in:
-
-```text
-milestone4_test_results.txt
-```
-
-Regenerate the report using:
-
-```powershell
-python -m pytest Tests/ -v > milestone4_test_results.txt 2>&1
-```
-
-**Milestone 4 Outcome:** 60 passing automated tests, manual verification of the main dashboard modules, CSV validation checks, end-to-end workflow testing, and updated project documentation.
-
----
-
-# 🧠 5. Machine Learning Model Performance
-
-Evaluation was performed on a 20% stratified test set:
-
-- Total test records: 2,000
-- Normal records: 1,932
-- Failure records: 68
-
-Target leakage was addressed by excluding failure-cause indicator flags from model input features.
-
-| Model Candidate | Accuracy | Precision (Failure) | Recall (Failure) | F1-Score (Failure) | ROC-AUC | FN | FP |
-|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| Logistic Regression (Baseline) | 96.75% | 63.64% | 10.29% | 0.1772 | 0.8994 | 61 | 4 |
-| Logistic Regression (Balanced) | 82.45% | 14.18% | 82.35% | 0.2419 | 0.9070 | 12 | 339 |
-| Decision Tree (Baseline) | 97.85% | 68.66% | 67.65% | 0.6815 | 0.8328 | 22 | 21 |
-| Decision Tree (Balanced) | 93.65% | 33.14% | 85.29% | 0.4774 | 0.8761 | 10 | 117 |
-| Random Forest (Baseline) | 97.95% | 72.13% | 64.71% | 0.6822 | 0.9612 | 24 | 17 |
-| **Improved Random Forest (Selected)** | **98.55%** | **76.00%** | **83.82%** | **0.7972** | **0.9823** | **11** | **18** |
-
-### Resolving the Accuracy Paradox
-
-The dataset contains significantly more normal records than failure records.
-
-Baseline Logistic Regression achieves 96.75% accuracy but detects only 10.29% of actual failures.
-
-For predictive maintenance, missed failures are particularly important because they can result in unexpected machine breakdowns.
-
-The Improved Random Forest model achieves 83.82% failure recall and reduces false negatives from 24 to 11 compared with the baseline Random Forest.
-
-This demonstrates the importance of evaluating precision, recall, F1-score, and false-negative counts alongside accuracy.
-
----
-
-# 🏗️ 6. Repository Architecture
+The repository follows a modular structure to separate data processing, machine learning, dashboard functionality, and testing.
 
 ```text
 AI-Based-Industrial-Maintenance-and-Process-Optimization/
 │
-├── src/
-│   ├── __init__.py
-│   ├── data_preprocessing.py
-│   ├── data_validation.py
-│   ├── failure_analysis.py
-│   ├── features.py
-│   ├── machine_monitoring.py
-│   ├── model_comparison.py
-│   ├── prediction.py
-│   └── predictive_model.py
+├── .streamlit/
+│   └── config.toml
 │
 ├── dashboard/
 │   ├── app.py
 │   ├── components.py
 │   ├── styles.py
+│   │
 │   └── views/
 │       ├── overview.py
 │       ├── prediction.py
@@ -436,249 +232,209 @@ AI-Based-Industrial-Maintenance-and-Process-Optimization/
 │       └── maintenance.py
 │
 ├── data/
+│   └── Dataset.csv
+│
+├── docs/
+│   ├── implementation.md
+│   └── testing_report.md
 │
 ├── models/
 │   ├── best_model.pkl
 │   └── model_metadata.json
 │
 ├── outputs/
-│   ├── preprocessing_report.txt
-│   ├── first_five_rows.png
-│   └── Other generated reports and visualizations
+│   └── Generated reports and visualizations
 │
-├── Tests/
-│   ├── test_deliverables.py
-│   ├── test_integration.py
-│   ├── test_milestone4_validation.py
-│   ├── test_prediction.py
-│   ├── test_preprocessing.py
-│   └── test_validation.py
+├── screenshots/
+│   └── Project screenshots
 │
-├── docs/
+├── src/
+│   ├── Data preprocessing
+│   ├── Data validation
+│   ├── Failure analysis
+│   ├── Feature engineering
+│   ├── Model comparison
+│   ├── Prediction
+│   └── Predictive modeling
 │
-├── milestone4_test_results.txt
+├── tests/
+│   └── Automated and integration tests
+│
+├── .gitignore
 ├── requirements.txt
-└── README.md
+├── README.md
+├── TEAM_TASK_ALLOCATION.md
+└── MILESTONE_4_WORK_PLAN.md
 ```
 
-*Note: This is a representative project structure. Generated files and additional documentation may vary depending on the current repository contents.*
+## ⚡ 8. Installation and Setup
 
----
+Follow these steps to run the project locally.
 
-# ⚡ 7. Getting Started and Installation
+### Prerequisites
+
+- Python 3.x
+- Git
+- VS Code or another Python IDE
+- Internet connection for installing dependencies
 
 ### Step 1: Clone the Repository
 
 ```bash
 git clone https://github.com/adithyanbalu/AI-Based-Industrial-Maintenance-and-Process-Optimization.git
+```
 
+### Step 2: Navigate to the Project Directory
+
+```bash
 cd AI-Based-Industrial-Maintenance-and-Process-Optimization
 ```
 
-### Step 2: Create a Virtual Environment
+### Step 3: Create a Virtual Environment
 
 ```bash
-python -m venv venv
+python -m venv .venv
 ```
 
-### Step 3: Activate the Virtual Environment
-
-Windows CMD:
-
-```cmd
-venv\Scripts\activate
-```
+### Step 4: Activate the Virtual Environment
 
 Windows PowerShell:
 
 ```powershell
-.\venv\Scripts\Activate.ps1
+.\.venv\Scripts\Activate.ps1
 ```
 
-### Step 4: Install Dependencies
+Windows Command Prompt:
+
+```cmd
+.venv\Scripts\activate.bat
+```
+
+### Step 5: Install Dependencies
 
 ```bash
 python -m pip install --upgrade pip
-
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 ```
 
-### Step 5: Preprocess Dataset
+### Step 6: Verify Dataset and Model Files
 
-```bash
-python src/data_preprocessing.py
+Ensure that the required project files are available:
+
+```text
+data/Dataset.csv
+models/best_model.pkl
+models/model_metadata.json
 ```
 
-### Step 6: Run Model Comparison
-
-```bash
-python src/model_comparison.py
-```
-
-### Step 7: Train and Save the Improved Model
-
-```bash
-python src/predictive_model.py
-```
-
-### Step 8: Test the Prediction Module
-
-```bash
-python src/prediction.py
-```
-
-### Step 9: Execute Automated Tests
-
-```bash
-python -m pytest Tests/ -v
-```
-
-### Step 10: Launch the Dashboard
+### Step 7: Launch the Dashboard
 
 ```bash
 python -m streamlit run dashboard/app.py
 ```
 
-Open the local URL provided by Streamlit in your browser.
+Streamlit will provide a local URL, usually:
 
----
+```text
+http://localhost:8501
+```
 
-# 🖥️ 8. Streamlit Command Center Pages
+Open this URL in your browser to access the dashboard.
 
-### 1. Command Center / Overview
+## 🧪 9. Testing and Verification
 
-- Fleet telemetry overview.
-- Model status.
-- Dataset information.
-- KPI cards.
-- Machine failure statistics.
+Testing is an important part of ensuring the reliability of the predictive maintenance system.
 
-### 2. Failure Prediction
+The project includes unit tests, integration tests, input validation tests, prediction tests, and dashboard verification.
 
-- Individual machine parameter inputs.
-- Failure probability estimation.
-- Risk classification.
-- Diagnostic information.
-- Maintenance suggestions.
+### Run the Automated Test Suite
 
-### 3. Batch CSV Analysis
+```bash
+python -m pytest tests/ -v
+```
 
-- CSV file upload.
-- Required column validation.
-- Batch machine predictions.
-- Normal and failure counts.
-- Failure probability analysis.
-- Export functionality.
+### Latest Verification Results
 
-### 4. Failure Analytics
-
-- Historical failure analysis.
-- Failure rate visualization.
-- Failure mechanism analysis.
-- Machine operating parameter comparison.
-
-### 5. Model Performance
-
-- Algorithm comparison.
-- Model evaluation metrics.
-- Confusion matrix information.
-- False-positive and false-negative analysis.
-- ROC-AUC results.
-
-### 6. Maintenance Insights
-
-- Machine health status.
-- Warning and critical condition indicators.
-- Maintenance guidance.
-- Machine operating condition analysis.
-
----
-
-# 🧪 9. Testing and Quality Assurance Summary
-
-| Testing Area | Verified Result |
+| Verification | Result |
 |---|---|
-| Automated Testing | 60 tests passed |
-| Failed Automated Tests | 0 |
-| Dataset Validation | 10,000 records, 14 columns |
-| Missing Value Check | 0 missing values |
-| Duplicate Check | 0 duplicate records |
-| Feature Engineering | PASS |
-| Individual Prediction | PASS |
-| Batch CSV Prediction | PASS |
-| Failure Analytics | PASS |
-| Model Performance | PASS |
-| Maintenance Insights | PASS |
-| Invalid CSV Format | Rejected with parser error |
-| Missing Required Columns | PASS |
-| Dashboard Runtime | PASS |
-| End-to-End Testing | PASS |
-| CSV Export | Tested |
+| Automated Pytest Suite | 69 Passed |
+| Failed Tests | 0 |
+| Dashboard Sections | 6 Manually Verified |
+| Dashboard AppTest Checks | Passed |
+| Batch Validation | Verified |
+| Missing and Invalid Value Handling | Verified |
+| Extra CSV Column Preservation | Verified |
+| GitHub Publication | Successful |
 
-### Test Execution Report
+**Latest verified test result: 69 passed, 0 failed.**
 
-```text
-milestone4_test_results.txt
-```
+These results represent the project's verification at the time of the Milestone 4 final checks.
 
-The latest recorded automated test result:
+## 🔒 10. Project Scope and Limitations
 
-```text
-============================= 60 passed =============================
-```
+The project is developed as a dataset-based predictive maintenance solution.
 
-### Documentation
+Important considerations:
 
-Project documentation is maintained alongside the source code and test report.
+- The system uses the AI4I 2020 benchmark dataset.
+- It does not connect to live industrial IoT devices or physical sensors.
+- Predictions are based on the trained machine learning model and supplied input parameters.
+- Maintenance recommendations are generated using rule-based logic.
+- Predictions are decision-support outputs and should not replace professional industrial inspection.
+- Model performance on benchmark data does not guarantee equivalent performance in real industrial environments.
+
+## 👥 11. Project Team
+
+Developed as part of the **Infosys Springboard Virtual Internship 7.0**.
+
+| Team Member 
+|---|---|
+| Adithyan B 
+| Hriday Kaustubh Machiraju 
+| Dheepesh N
+| Ganga Vanaparthi 
+
+The project was developed collaboratively, with responsibilities distributed across machine learning, data processing, dashboard development, testing, integration, and documentation.
+
+## 🚀 12. Future Enhancements
+
+Potential future improvements include:
+
+- Integration with real industrial sensor data.
+- Real-time machine condition monitoring.
+- Time-series-based failure prediction.
+- Advanced anomaly detection.
+- Remaining Useful Life (RUL) estimation.
+- Cloud deployment and remote monitoring.
+- Advanced predictive maintenance scheduling.
+- Integration with industrial maintenance management systems.
+
+These are potential extensions and are not claimed as current implemented capabilities.
+
+## 🏆 13. Project Outcome
+
+The project demonstrates how machine learning and interactive data visualization can support predictive maintenance workflows.
+
+By combining data preprocessing, feature engineering, model comparison, failure prediction, batch analysis, and maintenance guidance, the system provides an integrated platform for exploring industrial machine health and potential failure risks.
+
+It also demonstrates the importance of handling imbalanced datasets, evaluating failure recall, validating user inputs, and building reliable machine learning applications.
 
 ---
 
-# ⚠️ 10. Project Limitations and Ethical Disclosures
+## 📌 Repository
 
-1. **Benchmark Scope:** The system is based on the AI4I 2020 Predictive Maintenance benchmark dataset.
-2. **No Hardware Claim:** The project does not claim live physical factory sensor connectivity.
-3. **Decision Support:** Predictions and maintenance recommendations are decision-support information, not guaranteed physical diagnoses.
-4. **Dataset Dependency:** Prediction quality depends on the quality and characteristics of the training dataset.
-5. **Input Validation:** Malformed CSV files are rejected, but parser error messages can be improved.
-6. **Generalization:** Model performance may vary for machines and operating conditions outside the training dataset.
-7. **No Automated Shutdown:** The application does not directly control or shut down industrial machinery.
+**GitHub:**  
+https://github.com/adithyanbalu/AI-Based-Industrial-Maintenance-and-Process-Optimization
 
----
+**Project:** AI-Based Industrial Maintenance and Process Optimization System
 
-# 🚀 11. Future Scope
+**Internship:** Infosys Springboard Virtual Internship 7.0
 
-- Real-time IoT sensor integration.
-- Live industrial machine monitoring.
-- Cloud-based predictive maintenance.
-- Advanced machine learning and deep learning models.
-- Improved CSV input validation and user-friendly error messages.
-- Automated maintenance scheduling.
-- Alert and notification systems.
-- Model retraining using additional industrial datasets.
-- Deployment in practical industrial environments.
-
----
-
-# 🎯 12. Conclusion
-
-The **AI-Based Industrial Maintenance and Process Optimization System** demonstrates the application of machine learning in predictive maintenance.
-
-The project progressed from dataset analysis and initial model development to data processing, model improvement, dashboard integration, testing, and documentation.
-
-The selected Improved Random Forest model achieved **98.55% accuracy and 83.82% failure recall** in the reported evaluation.
-
-The Streamlit dashboard provides individual machine predictions, batch CSV analysis, failure analytics, model performance evaluation, and maintenance insights.
-
-As part of Milestone 4, the automated test suite recorded **60 passing tests with zero failures**. Manual verification was also performed across the main dashboard modules, CSV validation scenarios, and end-to-end workflow.
-
-The system provides a foundation for reducing unexpected machine downtime and supporting data-driven industrial maintenance decisions.
 
 ---
 
 <p align="center">
-  <b>Project:</b> AI-Based Industrial Maintenance and Process Optimization System<br/>
-  <b>Internship:</b> Infosys Springboard Virtual Internship 7.0<br/>
-  <b>Track:</b> Artificial Intelligence<br/>
-  <b>Milestones:</b> 1 – 4<br/>
-  <b>Final Document:</b> README.md
+  <strong>Built with Python, Machine Learning, and Streamlit.</strong>
+  <br/>
+  <em>Turning industrial data into actionable maintenance insights.</em>
 </p>
