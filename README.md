@@ -387,14 +387,14 @@ Important considerations:
 
 Developed as part of the **Infosys Springboard Virtual Internship 7.0**.
 
-| Team Member 
-|---|---|
-| Adithyan B 
-| Hriday Kaustubh Machiraju 
-| Dheepesh N
-| Ganga Vanaparthi 
+| S.No. | Team Member |
+|:---:|---|
+| 1 | Adithyan B |
+| 2 | Hriday Kaustubh Machiraju |
+| 3 | Dheepesh N |
+| 4 | Ganga Vanaparthi |
 
-The project was developed collaboratively, with responsibilities distributed across machine learning, data processing, dashboard development, testing, integration, and documentation.
+**Team Effort:** This project was collaboratively developed by all four team members, with contributions throughout the design, development, implementation, testing, and documentation phases.
 
 ## 🚀 12. Future Enhancements
 
