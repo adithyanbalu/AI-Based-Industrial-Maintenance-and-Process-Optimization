@@ -798,8 +798,10 @@ def chart_confusion_matrix(cm_data: Union[Dict[str, int], np.ndarray, list], hei
     return fig
 
 
-def chart_feature_importances(fi_list: Union[List[Dict[str, Any]], pd.DataFrame], height: int = 380) -> go.Figure:
+def chart_feature_importances(fi_list: Union[List[Dict[str, Any]], pd.DataFrame, Dict[str, Any]], height: int = 380) -> go.Figure:
     """Feature importances; physics-derived features are highlighted."""
+    if isinstance(fi_list, dict):
+        fi_list = fi_list.get("feature_importances", fi_list)
     if fi_list is None or len(fi_list) == 0:
         return _empty_fig("No feature-importance data in model metadata")
     fi_df = pd.DataFrame(fi_list) if not isinstance(fi_list, pd.DataFrame) else fi_list.copy()

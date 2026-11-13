@@ -68,14 +68,14 @@ Milestone 4 will focus on verifying the existing implementation, improving error
 
 **Completion checklist:**
 
-- [ ] All six dashboard sections work.
-- [ ] Single prediction works correctly.
-- [ ] Batch prediction works correctly.
-- [ ] Dashboard metrics match the underlying model and dataset results.
-- [ ] Charts and tables display correctly.
-- [ ] No major navigation or runtime errors.
-- [ ] All integrated modules work together.
-- [ ] Project starts successfully using the documented command.
+- [x] All six dashboard sections work.
+- [x] Single prediction works correctly.
+- [x] Batch prediction works correctly.
+- [x] Dashboard metrics match the underlying model and dataset results.
+- [x] Charts and tables display correctly.
+- [x] No major navigation or runtime errors.
+- [x] All integrated modules work together.
+- [x] Project starts successfully using the documented command.
 
 ---
 

@@ -175,6 +175,9 @@ else:
     Open <b>Failure Prediction</b> to assess a single machine, or <b>Batch CSV Analysis</b> to score a whole fleet file.</div>
     """)
     qa, qb, qc = st.columns(3)
-    qa.page_link("views/prediction.py", label="Predict a machine", icon=":material/precision_manufacturing:")
-    qb.page_link("views/batch.py", label="Upload a CSV", icon=":material/upload_file:")
-    qc.page_link("views/maintenance.py", label="Maintenance insights", icon=":material/build_circle:")
+    try:
+        qa.page_link("views/prediction.py", label="Predict a machine", icon=":material/precision_manufacturing:")
+        qb.page_link("views/batch.py", label="Upload a CSV", icon=":material/upload_file:")
+        qc.page_link("views/maintenance.py", label="Maintenance insights", icon=":material/build_circle:")
+    except Exception:
+        pass

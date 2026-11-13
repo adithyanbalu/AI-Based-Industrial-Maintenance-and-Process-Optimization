@@ -282,20 +282,21 @@ Testing was performed using **Pytest**.
 Command:
 
 ```bash
-python -m pytest Tests/ -v
+python -m pytest tests/ -v
 ```
 
-**Recorded Result: 60 passed, 0 failed.**
+**Recorded Result: 69 passed, 0 failed.**
 
 | Test File | Coverage |
 |---|---|
+| test_dashboard_integration.py | Dashboard view execution (all 6 views), batch validation distinction, extra columns, advisor integration |
 | test_deliverables.py | Project deliverables and maintenance advisor tests |
 | test_integration.py | Integration testing |
 | test_milestone4_validation.py | Milestone 4 validation scenarios |
 | test_prediction.py | Individual and batch prediction tests |
 | test_preprocessing.py | Dataset preprocessing tests |
 | test_validation.py | Input validation and error-handling tests |
-| **Total** | **60 tests passed** |
+| **Total** | **69 tests passed** |
 
 ### Manual Dashboard Testing
 

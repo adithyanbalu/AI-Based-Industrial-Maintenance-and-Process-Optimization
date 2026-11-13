@@ -31,8 +31,8 @@ validate_machine_data = get_data_validator()
 page_header(
     "Fleet telemetry",
     "Batch CSV Analysis",
-    "Upload a CSV of machine readings, check it, score every row with the trained model and download the enriched results.",
-    chips=[("6 required columns", "cyan"), ("Missing values imputed safely", "")],
+    "Upload a CSV of machine readings, validate data ranges, score every record with the trained model and download enriched results.",
+    chips=[("6 required columns", "cyan"), ("Safe missing-value imputation", ""), ("Strict range validation", "")],
 )
 
 STEPS = [("Upload", "Select a CSV file"), ("Validate", "Schema & value checks"), ("Predict", "Score every machine"), ("Export", "Download results")]
@@ -78,8 +78,9 @@ if uploaded is None:
         with st.container(key="panel_format"):
             panel_title("Expected CSV format", "Extra columns are kept in the output and ignored by the model")
             md('<div class="chip-row">' + "".join(f'<span class="chip cyan">{esc(c)}</span>' for c in MODEL_FEATURES) + "</div>")
-            md('<div class="meter-note" style="margin-top:10px;">Type must be L, M or H. Numeric values should be within plausible physical ranges; '
-               "missing or out-of-range values are imputed or clipped automatically.</div>")
+            md('<div class="meter-note" style="margin-top:10px;">Product Type must be L, M, or H. Numerical values must fall '
+               "within valid physical operational bounds. Missing values can be safely imputed with nominal operating defaults "
+               "during batch analysis; out-of-range values and invalid data types are strictly rejected to ensure data integrity.</div>")
     with c_b:
         with st.container(key="panel_template"):
             panel_title("Need an example?")
@@ -97,43 +98,73 @@ if parse_error:
 section_header("File & validation", "Checked before any prediction is made", "fact_check")
 
 missing_cols = [c for c in MODEL_FEATURES if c not in df_upload.columns]
-try:
-    is_valid, error_list, _validated = validate_machine_data(df_upload)
-except Exception as exc:  # validator must never crash the page
-    is_valid, error_list = False, [f"Validator error: {exc}"]
+empty_file = len(df_upload) == 0
+
+strict_valid, strict_errors = False, []
+imputed_valid, fatal_errors = False, []
+
+if not missing_cols and not empty_file:
+    try:
+        strict_valid, strict_errors, _ = validate_machine_data(df_upload, allow_imputation=False)
+    except Exception as exc:
+        strict_valid, strict_errors = False, [f"Validator error: {exc}"]
+
+    try:
+        imputed_valid, fatal_errors, _ = validate_machine_data(df_upload, allow_imputation=True)
+    except Exception as exc:
+        imputed_valid, fatal_errors = False, [f"Validator error: {exc}"]
+
+can_predict = (not missing_cols) and (not empty_file) and imputed_valid
 
 size_kb = uploaded.size / 1024
+missing_cells = int(df_upload.isnull().sum().sum())
 kpi_grid([
     dict(title="File", value=f'<span style="font-size:1.15rem">{esc(uploaded.name)}</span>', subtext=f"{size_kb:,.1f} KB", icon_name="description", accent=COLORS["brand_cyan"]),
     dict(title="Records", value=f"{len(df_upload):,}", subtext="Rows detected", icon_name="table_rows", accent=COLORS["accent_cyan"]),
     dict(title="Columns", value=f"{df_upload.shape[1]}", subtext=f"{len(MODEL_FEATURES) - len(missing_cols)} of {len(MODEL_FEATURES)} required found", icon_name="view_column", accent=COLORS["brand_blue"]),
-    dict(title="Missing cells", value=f"{int(df_upload.isnull().sum().sum()):,}", subtext="Imputed if present", icon_name="grid_off",
-         accent=COLORS["status_warning"] if df_upload.isnull().sum().sum() else COLORS["status_normal"]),
+    dict(title="Missing cells", value=f"{missing_cells:,}", subtext="Imputable with defaults" if missing_cells > 0 else "None detected", icon_name="grid_off",
+         accent=COLORS["status_warning"] if missing_cells else COLORS["status_normal"]),
 ])
 
 st.markdown("<div style='height:14px'></div>", unsafe_allow_html=True)
 col_chips = "".join(
     f'<span class="chip {"ok" if c in df_upload.columns else "bad"}">{"✓" if c in df_upload.columns else "✕"} {esc(c)}</span>' for c in MODEL_FEATURES
 )
+
 if missing_cols:
     md(f"""
     <div class="callout danger"><div class="callout-title">{icon('error')}Validation failed — required columns are missing</div>
     <div class="chip-row" style="margin:8px 0;">{col_chips}</div>
     Add the missing column(s) <b>{esc(', '.join(missing_cols))}</b> and upload the file again.</div>
     """)
-elif is_valid:
+elif empty_file:
+    md(f"""
+    <div class="callout danger"><div class="callout-title">{icon('error')}Validation failed — empty dataset</div>
+    The uploaded CSV contains 0 machine records. Please provide a CSV file containing machine telemetry rows.</div>
+    """)
+elif not imputed_valid:
+    items = "".join(f"<li>{esc(e)}</li>" for e in fatal_errors[:10])
+    extra_note = f"<li style='color:#94A3B8;'>... and {len(fatal_errors) - 10} more validation error(s).</li>" if len(fatal_errors) > 10 else ""
+    md(f"""
+    <div class="callout danger"><div class="callout-title">{icon('error')}Validation failed — invalid values rejected</div>
+    <div class="chip-row" style="margin:8px 0;">{col_chips}</div>
+    <ul style="margin:4px 0 6px 18px;padding:0;">{items}{extra_note}</ul>
+    <b>Out-of-range numerical values, invalid product types, and unparsable inputs are strictly rejected.</b> These records cannot reach model inference. Please correct the values in your CSV to enable batch scoring.</div>
+    """)
+elif not strict_valid:
+    items = "".join(f"<li>{esc(e)}</li>" for e in strict_errors[:8])
+    extra_note = f"<li style='color:#94A3B8;'>... and {len(strict_errors) - 8} more missing value(s).</li>" if len(strict_errors) > 8 else ""
+    md(f"""
+    <div class="callout warning"><div class="callout-title">{icon('warning')}Validation notice — missing values detected (imputable)</div>
+    <div class="chip-row" style="margin:8px 0;">{col_chips}</div>
+    <ul style="margin:4px 0 6px 18px;padding:0;">{items}{extra_note}</ul>
+    <b>Safe batch imputation is active:</b> Missing cells will be filled with nominal operating defaults during inference. All parameters are within valid physical limits.</div>
+    """)
+else:
     md(f"""
     <div class="callout success"><div class="callout-title">{icon('task_alt')}CSV validation passed</div>
     <div class="chip-row" style="margin:8px 0;">{col_chips}</div>
-    All required columns are present and all values are inside plausible physical ranges.</div>
-    """)
-else:
-    items = "".join(f"<li>{esc(e)}</li>" for e in error_list)
-    md(f"""
-    <div class="callout warning"><div class="callout-title">{icon('warning')}Validation warnings</div>
-    <div class="chip-row" style="margin:8px 0;">{col_chips}</div>
-    <ul style="margin:4px 0 6px 18px;padding:0;">{items}</ul>
-    <b>Safe imputation is enabled</b> — missing values are filled with nominal defaults and out-of-range values are clipped, so every row can be scored.</div>
+    All required columns are present, all parameters fall within valid physical operational ranges, and no missing values were detected. Ready for batch prediction.</div>
     """)
 
 with st.expander("Preview uploaded data (first 10 rows)", expanded=False, icon=":material/table_view:"):
@@ -141,7 +172,15 @@ with st.expander("Preview uploaded data (first 10 rows)", expanded=False, icon="
 
 # ------------------------------------------------------------------ Predict
 section_header("Run predictions", "Scores every record with the saved model", "play_circle")
-run = st.button("RUN BATCH PREDICTION", type="primary", icon=":material/bolt:", key="run_batch", disabled=bool(missing_cols))
+run = st.button("RUN BATCH PREDICTION", type="primary", icon=":material/bolt:", key="run_batch", disabled=not can_predict)
+if not can_predict:
+    if missing_cols:
+        st.caption("Batch prediction disabled: Upload a CSV containing all 6 required feature columns.")
+    elif empty_file:
+        st.caption("Batch prediction disabled: CSV file contains 0 machine records.")
+    elif not imputed_valid:
+        st.caption("Batch prediction disabled: Fix the rejected out-of-range or invalid values listed above.")
+
 if run:
     try:
         with st.spinner(f"Scoring {len(df_upload):,} machines..."):
@@ -192,8 +231,11 @@ if results is not None:
     section_header("Results table", "Original columns plus model output", "table_chart")
     only_fail = st.toggle("Show predicted failures only", value=False, key="batch_only_fail")
     view = results[results["Prediction"] == 1] if only_fail else results
-    show_cols = [c for c in ["Type", "Air temperature [K]", "Process temperature [K]", "Rotational speed [rpm]", "Torque [Nm]",
-                             "Tool wear [min]", "Status", "Failure_Probability", "Risk_Level", "Diagnostic_Notes"] if c in view.columns]
+    id_cols = [c for c in ["UDI", "Product ID", "Machine_ID", "ID", "Serial"] if c in view.columns]
+    core_cols = [c for c in MODEL_FEATURES if c in view.columns]
+    pred_cols = [c for c in ["Status", "Failure_Probability", "Risk_Level", "Diagnostic_Notes"] if c in view.columns]
+    other_cols = [c for c in view.columns if c not in set(id_cols + core_cols + pred_cols + ["Prediction", "Prediction_Label", "Machine failure"])]
+    show_cols = id_cols + core_cols + pred_cols + other_cols
     cfg = {"Failure_Probability": st.column_config.ProgressColumn("Failure probability", min_value=0.0, max_value=1.0, format="%.3f")}
     show_table(view[show_cols], hide_index=True, column_config=cfg, height=420)
     st.caption(f"Showing {len(view):,} of {total:,} records.")
