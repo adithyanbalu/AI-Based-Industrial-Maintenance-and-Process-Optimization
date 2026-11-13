@@ -157,8 +157,10 @@ def test_prediction_validation_rejections():
         predict_single(type_="M", air_temp=-50, proc_temp=310, rot_speed=1500, torque=40, tool_wear=10)
 
 
+
 def test_maintenance_advisor_rules():
     """Verify deterministic rule generation across physical failure modes."""
+
     # Tool wear hazard
     tw_guidance = fallback_generate_maintenance_guidance({
         "Type": "L", "Air temperature [K]": 300, "Process temperature [K]": 310,
@@ -168,13 +170,12 @@ def test_maintenance_advisor_rules():
 
     # Heat dissipation hazard
     hdf_guidance = fallback_generate_maintenance_guidance({
-        "Type": "L", "Air temperature [K]": 303.5, "Process temperature [K]": 311.0, # delta = 7.5 < 8.6
-        "Rotational speed [rpm]": 1300, "Torque [Nm]": 40, "Tool wear [min]": 50 # speed < 1380
+        "Type": "L", "Air temperature [K]": 303.5, "Process temperature [K]": 311.0,
+        "Rotational speed [rpm]": 1300, "Torque [Nm]": 40, "Tool wear [min]": 50
     })
-    assert any("Thermal & Cooling" in g["category"] for g in tw_guidance or "Thermal & Cooling" in g["category"] for g in hdf_guidance)
+    assert any("Thermal & Cooling" in g["category"] for g in hdf_guidance)
 
-    # Power failure hazard (high power > 9.0 kW)
-    # Power = 2400 * 50 * 2*pi/60 = 12,566 W = 12.5 kW
+    # Power failure hazard
     pwf_guidance = fallback_generate_maintenance_guidance({
         "Type": "H", "Air temperature [K]": 300, "Process temperature [K]": 310,
         "Rotational speed [rpm]": 2400, "Torque [Nm]": 50, "Tool wear [min]": 50

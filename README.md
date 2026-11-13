@@ -10,6 +10,7 @@
   <img src="https://img.shields.io/badge/Framework-Streamlit-red?style=for-the-badge&logo=streamlit&logoColor=white" alt="Streamlit"/>
   <img src="https://img.shields.io/badge/Domain-Predictive%20Maintenance-green?style=for-the-badge" alt="Predictive Maintenance"/>
   <img src="https://img.shields.io/badge/Model-Random%20Forest%20v2.1-cyan?style=for-the-badge" alt="Random Forest"/>
+  <img src="https://img.shields.io/badge/Tests-60%20Passed-brightgreen?style=for-the-badge" alt="60 Tests Passed"/>
 </p>
 
 ---
@@ -261,19 +262,22 @@ Verify application functionality, identify issues, execute automated tests, perf
 
 - Reviewed the existing automated test suite.
 - Executed all automated tests.
-- Added dataset preprocessing validation tests.
+- Reviewed feature engineering test coverage.
 - Verified dataset dimensions.
 - Checked missing values and duplicate records.
 - Tested prediction functionality.
 - Tested batch CSV prediction.
 - Checked CSV input validation.
+- Tested validation and error-handling scenarios.
 - Tested dashboard modules.
+- Performed end-to-end workflow verification.
 - Recorded test execution results.
 - Updated project README documentation.
+- Documented project limitations and future improvements.
 
 ### Automated Testing
 
-Testing was performed using Pytest.
+Testing was performed using **Pytest**.
 
 Command:
 
@@ -281,16 +285,17 @@ Command:
 python -m pytest Tests/ -v
 ```
 
-<text>**Recorded result: 35 passed, 0 failed.**</text>
+**Recorded Result: 60 passed, 0 failed.**
 
-| Test File | Test Cases |
-|---|---:|
-| test_deliverables.py | 9 |
-| test_integration.py | 2 |
-| test_prediction.py | 9 |
-| test_preprocessing.py | 6 |
-| test_validation.py | 9 |
-| **Total** | **35** |
+| Test File | Coverage |
+|---|---|
+| test_deliverables.py | Project deliverables and maintenance advisor tests |
+| test_integration.py | Integration testing |
+| test_milestone4_validation.py | Milestone 4 validation scenarios |
+| test_prediction.py | Individual and batch prediction tests |
+| test_preprocessing.py | Dataset preprocessing tests |
+| test_validation.py | Input validation and error-handling tests |
+| **Total** | **60 tests passed** |
 
 ### Manual Dashboard Testing
 
@@ -348,6 +353,8 @@ The following workflow was manually verified:
 8. Review model performance.
 9. Open maintenance insights.
 
+Result: PASS
+
 ### Testing Report
 
 Automated test output is saved in:
@@ -358,11 +365,11 @@ milestone4_test_results.txt
 
 Regenerate the report using:
 
-```cmd
+```powershell
 python -m pytest Tests/ -v > milestone4_test_results.txt 2>&1
 ```
 
-**Milestone 4 Outcome:** 35 passing automated tests, manual verification of the main dashboard modules, CSV validation checks, and updated project documentation.
+**Milestone 4 Outcome:** 60 passing automated tests, manual verification of the main dashboard modules, CSV validation checks, end-to-end workflow testing, and updated project documentation.
 
 ---
 
@@ -427,6 +434,8 @@ AI-Based-Industrial-Maintenance-and-Process-Optimization/
 │       ├── performance.py
 │       └── maintenance.py
 │
+├── data/
+│
 ├── models/
 │   ├── best_model.pkl
 │   └── model_metadata.json
@@ -439,20 +448,19 @@ AI-Based-Industrial-Maintenance-and-Process-Optimization/
 ├── Tests/
 │   ├── test_deliverables.py
 │   ├── test_integration.py
+│   ├── test_milestone4_validation.py
 │   ├── test_prediction.py
 │   ├── test_preprocessing.py
 │   └── test_validation.py
 │
 ├── docs/
-│   ├── implementation.md
-│   └── testing_report.md
 │
 ├── milestone4_test_results.txt
 ├── requirements.txt
 └── README.md
 ```
 
-*Note: The architecture above documents the project components. Confirm the current repository contents before treating every listed file as present.*
+*Note: This is a representative project structure. Generated files and additional documentation may vary depending on the current repository contents.*
 
 ---
 
@@ -589,10 +597,12 @@ Open the local URL provided by Streamlit in your browser.
 
 | Testing Area | Verified Result |
 |---|---|
-| Automated Testing | 35 tests passed |
+| Automated Testing | 60 tests passed |
+| Failed Automated Tests | 0 |
 | Dataset Validation | 10,000 records, 14 columns |
 | Missing Value Check | 0 missing values |
 | Duplicate Check | 0 duplicate records |
+| Feature Engineering | PASS |
 | Individual Prediction | PASS |
 | Batch CSV Prediction | PASS |
 | Failure Analytics | PASS |
@@ -600,6 +610,8 @@ Open the local URL provided by Streamlit in your browser.
 | Maintenance Insights | PASS |
 | Invalid CSV Format | Rejected with parser error |
 | Missing Required Columns | PASS |
+| Dashboard Runtime | PASS |
+| End-to-End Testing | PASS |
 | CSV Export | Tested |
 
 ### Test Execution Report
@@ -608,14 +620,15 @@ Open the local URL provided by Streamlit in your browser.
 milestone4_test_results.txt
 ```
 
-### Documentation Files
+The latest recorded automated test result:
 
 ```text
-docs/implementation.md
-docs/testing_report.md
+============================= 60 passed =============================
 ```
 
-These documentation paths should be retained only if the corresponding files exist in the repository.
+### Documentation
+
+Project documentation is maintained alongside the source code and test report.
 
 ---
 
@@ -637,7 +650,7 @@ These documentation paths should be retained only if the corresponding files exi
 - Live industrial machine monitoring.
 - Cloud-based predictive maintenance.
 - Advanced machine learning and deep learning models.
-- Improved CSV input validation.
+- Improved CSV input validation and user-friendly error messages.
 - Automated maintenance scheduling.
 - Alert and notification systems.
 - Model retraining using additional industrial datasets.
@@ -651,11 +664,11 @@ The **AI-Based Industrial Maintenance and Process Optimization System** demonstr
 
 The project progressed from dataset analysis and initial model development to data processing, model improvement, dashboard integration, testing, and documentation.
 
-The selected Improved Random Forest model achieved 98.55% accuracy and 83.82% failure recall in the reported evaluation.
+The selected Improved Random Forest model achieved **98.55% accuracy and 83.82% failure recall** in the reported evaluation.
 
 The Streamlit dashboard provides individual machine predictions, batch CSV analysis, failure analytics, model performance evaluation, and maintenance insights.
 
-As part of Milestone 4, the automated test suite recorded 35 passing tests, and manual verification was performed across the main dashboard modules and CSV validation scenarios.
+As part of Milestone 4, the automated test suite recorded **60 passing tests with zero failures**. Manual verification was also performed across the main dashboard modules, CSV validation scenarios, and end-to-end workflow.
 
 The system provides a foundation for reducing unexpected machine downtime and supporting data-driven industrial maintenance decisions.
 
