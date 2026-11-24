@@ -263,8 +263,7 @@ AI-Based-Industrial-Maintenance-and-Process-Optimization/
 ├── .gitignore
 ├── requirements.txt
 ├── README.md
-├── TEAM_TASK_ALLOCATION.md
-└── MILESTONE_4_WORK_PLAN.md
+└── Complete project ppt
 ```
 
 ## ⚡ 8. Installation and Setup
